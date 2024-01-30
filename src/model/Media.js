@@ -37,6 +37,16 @@ module.exports = (sequelize) => {
       field: "user_id",
     },
 
+    slug: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "slug",
+    },
+
     name: {
       type: DataTypes.STRING(255),
       allowNull: true,

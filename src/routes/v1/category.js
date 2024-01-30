@@ -1,22 +1,19 @@
 const router = require("express").Router();
-const { controllers: trainingController } = require("@/src/api/v1/training");
+const { controllers: categoryController } = require("@/src/api/category");
 
 // const authenticate = require("../middleware/authenticate");
 // const authorize = require("../middleware/authorize");
 // const ownership = require('../middleware/ownership');
 
-
 // //* : GET ALL TRAINING BY DOCTOR
-router.get("/doctor/:id", trainingController.getAllTrainingsByDoctor);
+router.post("/", categoryController.createNewItem);
 
-//* : CREATE A TRAINING TO DOCTOR
-router.post("/doctor", trainingController.createDoctorTraining);
+router.get("/", categoryController.getAllItems);
 
-//* : UPDATE A DOCTOR TRAINING
-router.patch("/doctor/:id", trainingController.updateDoctorTraining);
+router.get("/:id", categoryController.getItemById);
 
-// //* : DELETE A DOCTOR TRAINING
-router.delete("/doctor/:id", trainingController.deleteDcoctorTraining);
+router.put("/:id", categoryController.updateItemById);
 
+router.delete("/:id", categoryController.deleteItemById);
 
 module.exports = router;

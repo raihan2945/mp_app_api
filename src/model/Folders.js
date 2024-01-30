@@ -83,6 +83,6 @@ module.exports = (sequelize) => {
     createdAt: false,
     updatedAt: false,
   };
-  const Folder = sequelize.define("Folder", attributes, options);
-  return Folder;
+  const Folders = sequelize.define("Folders", attributes, options);
+  return Folders;
 };

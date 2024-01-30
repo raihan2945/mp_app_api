@@ -88,7 +88,7 @@ module.exports = (sequelize) => {
     status: {
       type: DataTypes.ENUM("active", "paused"),
       allowNull: true,
-      defaultValue: null,
+      defaultValue: "active",
       primaryKey: false,
       autoIncrement: false,
       comment: null,
