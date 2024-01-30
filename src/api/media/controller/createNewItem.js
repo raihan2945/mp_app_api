@@ -1,12 +1,13 @@
-const folderService = require("@/src/lib/folder");
+const mediaService = require("@/src/lib/media");
 const inputSchema = require("@/src/validators/inputValidation");
 
 const createNewItem = async (req, res, next) => {
   const bodyData = req.body;
+  const { name, folder_id } = bodyData;
 
   const validationProperties = [
-    { name: "name", type: "string", required: true },
     { name: "folder_id", type: "string", required: false },
+    { name: "name", type: "string", required: true },
   ];
 
   //* BUILD INPU T SCHEMA
@@ -14,7 +15,7 @@ const createNewItem = async (req, res, next) => {
 
   //* : VALIDATE INPUT DATA
   const { error } = buildedSchema.validate(
-    { ...bodyData },
+    { name, folder_id },
     { abortEarly: false }
   );
 
@@ -28,7 +29,7 @@ const createNewItem = async (req, res, next) => {
 
   try {
     //*:
-    const createData = await folderService.createNew(bodyData);
+    const createData = await mediaService.createNew(bodyData);
 
     const response = {
       code: 200,

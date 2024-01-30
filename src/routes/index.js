@@ -13,6 +13,6 @@ router.use("/api/v1/schedules", scheduleRoutes);
 router.use("/api/v1/categories", cateogryRoutes);
 router.use("/api/v1/contacts", contactRoutes);
 router.use("/api/v1/folders", folderRoutes);
-// router.use("/api/v1/mediaRoutes", mediaRoutes);
+router.use("/api/v1/media", mediaRoutes);
 
 module.exports = router;

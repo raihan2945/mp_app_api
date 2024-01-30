@@ -1,19 +1,19 @@
 const router = require("express").Router();
-const { controllers: contactController } = require("@/src/api/contact");
+const { controllers: mediaController } = require("@/src/api/media");
 
 // const authenticate = require("../middleware/authenticate");
 // const authorize = require("../middleware/authorize");
 // const ownership = require('../middleware/ownership');
 
 //* 
-router.post("/", contactController.createNewItem);
+router.post("/", mediaController.createNewItem);
 
-router.get("/", contactController.getAllItems);
+router.get("/", mediaController.getAllItems);
 
-router.get("/:id", contactController.getItemById);
+router.get("/:id", mediaController.getItemById);
 
-router.put("/:id", contactController.updateItemById);
+router.put("/:id", mediaController.updateItemById);
 
-router.delete("/:id", contactController.deleteItemById);
+router.delete("/:id", mediaController.deleteItemById);
 
 module.exports = router;

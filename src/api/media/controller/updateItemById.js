@@ -1,9 +1,10 @@
-const folderService = require("@/src/lib/folder");
+const mediaService = require("@/src/lib/media");
 const inputSchema = require("@/src/validators/inputValidation");
 
 const updateItemById = async (req, res, next) => {
   const id = req.params.id;
   const bodyData = req.body;
+  const { name, folder_id } = bodyData;
 
   const validationProperties = [
     { name: "id", type: "number", required: true },
@@ -11,7 +12,6 @@ const updateItemById = async (req, res, next) => {
     { name: "folder_id", type: "string", required: false },
     { name: "status", type: "string", required: false },
   ];
-
 
   //* BUILD INPUT SCHEMA
   const buildedSchema = inputSchema(validationProperties);
@@ -32,7 +32,7 @@ const updateItemById = async (req, res, next) => {
 
   try {
     //*:
-    const item = await folderService.updateItemById(id, bodyData);
+    const item = await mediaService.updateItemById(id, bodyData);
 
     const response = {
       code: 200,

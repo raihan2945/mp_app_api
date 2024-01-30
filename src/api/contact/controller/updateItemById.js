@@ -17,6 +17,7 @@ const updateItemById = async (req, res, next) => {
     { name: "dob", type: "string", required: false },
     { name: "address", type: "string", required: false },
     { name: "notes", type: "string", required: false },
+    { name: "status", type: "string", required: false },
   ];
 
   //* BUILD INPUT SCHEMA

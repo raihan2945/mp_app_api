@@ -1,4 +1,4 @@
-const folderService = require("@/src/lib/folder");
+const mediaService = require("@/src/lib/media");
 const inputSchema = require("@/src/validators/inputValidation");
 
 const getItemById = async (req, res, next) => {
@@ -22,7 +22,7 @@ const getItemById = async (req, res, next) => {
 
   try {
     //*: CALL AUTH SERVICE TO SEND OTP TO USERS
-    const Item = await folderService.findItemById(id);
+    const Item = await mediaService.findItemById(id);
 
     const response = {
       code: 200,

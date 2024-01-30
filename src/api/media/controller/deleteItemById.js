@@ -1,4 +1,4 @@
-const folderService = require("@/src/lib/folder");
+const mediaService = require("@/src/lib/media");
 const inputSchema = require("@/src/validators/inputValidation");
 
 const deleteItemById = async (req, res, next) => {
@@ -22,7 +22,7 @@ const deleteItemById = async (req, res, next) => {
         
   try {
     //*: CALL AUTH SERVICE TO SEND OTP TO USERS
-    const Item = await folderService.deleteItemById(id);
+    const Item = await mediaService.deleteItemById(id);
 
     const response = {
       code: 200,
