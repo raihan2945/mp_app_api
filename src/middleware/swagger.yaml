@@ -1,0 +1,1675 @@
+---
+openapi: 3.0.0
+info:
+  title: POS Management api
+  description: "This is the first professional api project we creating in full-stack army. This is a simple blog api application where anyone can create a new account, login to their system and create articles that will be visible publicly."
+  contact:
+    name: Raihan Ahmad
+    email: raihan45@gmail.com
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/000RAIHANAHMAD/pos_management_api/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: http://localhost:5000/api/v1
+  description: Dev
+tags:
+- name: Auth
+  description: Authentication Endpoints (Public)
+- name: Product
+  description: Products Endpoints (public + private)
+- name: Order
+  description: Orders Endpoints (private)
+- name: Sales Summary
+  description: Sales Summary Endpoints (private)
+- name: User
+  description: Users Endpoints (private)
+paths:
+  /auth/signup:
+    post:
+      tags:
+      - Auth
+      description: create a new account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/auth_signup_body'
+      responses:
+        "201":
+          description: Signup successul
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+  /auth/signin:
+    post:
+      tags:
+      - Auth
+      description: Login to your account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/auth_signin_body'
+      responses:
+        "200":
+          description: Signin successul
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+  /auth/login_customer:
+    post:
+      tags:
+      - Auth
+      description: Login to your account as customer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/auth_login_customer_body'
+      responses:
+        "200":
+          description: Signin successul
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+  /products:
+    get:
+      tags:
+      - Product
+      description: Get all active products
+      parameters:
+      - name: page
+        in: query
+        description: Current page number
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 2
+      - name: limit
+        in: query
+        description: Limit content
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 2
+      - name: sort_type
+        in: query
+        description: Type of sorting (asc or dsc)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: asc
+          enum:
+          - asc
+          - dsc
+      - name: sort_by
+        in: query
+        description: Type of sort by
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: updatedAt
+          enum:
+          - updatedAt
+          - createdAt
+      - name: search
+        in: query
+        description: Search by product name
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: Product name
+      responses:
+        "200":
+          description: Return of active products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+    post:
+      tags:
+      - Product
+      description: Create a new Product
+      operationId: createProduct
+      requestBody:
+        description: To create a new product user must need to provide valid data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/products_body'
+      responses:
+        "201":
+          description: Product created Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCreateDTO'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+      security:
+      - bearerAuth: []
+  /products/id:
+    get:
+      tags:
+      - Product
+      description: Get a single product
+      parameters:
+      - name: id
+        in: query
+        description: Product Id
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 1
+      responses:
+        "200":
+          description: Product Details View
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_2'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "404":
+          description: Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+    delete:
+      tags:
+      - Product
+      description: Delete a product
+      parameters:
+      - name: id
+        in: query
+        description: Product id
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 1
+      responses:
+        "204":
+          description: User delted successfully
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        "404":
+          description: Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - Product
+      description: Update a product
+      parameters:
+      - name: id
+        in: query
+        description: Product id
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 1
+      requestBody:
+        content:
+          application/body:
+            schema:
+              $ref: '#/components/schemas/products_id_body'
+      responses:
+        "200":
+          description: Successfully Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+  /orders:
+    get:
+      tags:
+      - Order
+      description: Get All Orders
+      parameters:
+      - name: page
+        in: query
+        description: Current page number
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 2
+      - name: limit
+        in: query
+        description: Limit content
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 2
+      - name: sort_type
+        in: query
+        description: Type of sorting (asc or dsc)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: asc
+          enum:
+          - asc
+          - dsc
+      - name: sort_by
+        in: query
+        description: Type of sort by
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: updatedAt
+          enum:
+          - updatedAt
+          - createdAt
+      - name: role
+        in: query
+        description: User Role
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: customer
+          enum:
+          - customer
+          - salesman
+          - accounts
+          - admin
+      responses:
+        "200":
+          description: Return of orders
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_3'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+      security:
+      - bearerAuth: []
+    post:
+      tags:
+      - Order
+      description: Create a order
+      requestBody:
+        description: "To create a order, you need to provide valid data"
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orders_body'
+      responses:
+        "201":
+          description: Order created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOrder'
+      security:
+      - bearerAuth: []
+  /orders/id:
+    get:
+      tags:
+      - Order
+      description: Get order details
+      parameters:
+      - name: role
+        in: query
+        description: User Role
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: customer
+          enum:
+          - customer
+          - salesman
+          - accounts
+          - admin
+      responses:
+        "200":
+          description: Return of orders
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_3'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - Order
+      description: Update a order
+      requestBody:
+        description: "To create a order, you need to provide valid data"
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orders_id_body'
+      responses:
+        "201":
+          description: Order created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOrder'
+      security:
+      - bearerAuth: []
+  /generate_summary:
+    post:
+      tags:
+      - Sales Summary
+      description: Generate sales summary
+      requestBody:
+        description: Generate sales summary of a day
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/generate_summary_body'
+      responses:
+        "201":
+          description: Todays summary is generated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201_1'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+      security:
+      - bearerAuth: []
+  /summaries:
+    get:
+      tags:
+      - Sales Summary
+      description: Get All Orders
+      parameters:
+      - name: page
+        in: query
+        description: Current page number
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 2
+      - name: limit
+        in: query
+        description: Limit content
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 2
+      - name: sort_type
+        in: query
+        description: Type of sorting (asc or dsc)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: asc
+          enum:
+          - asc
+          - dsc
+      - name: sort_by
+        in: query
+        description: Type of sort by
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: updatedAt
+          enum:
+          - updatedAt
+          - createdAt
+      - name: id
+        in: query
+        description: Salesman ID
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 56
+      - name: date
+        in: query
+        description: date
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: date - time
+      responses:
+        "200":
+          description: Return of summarires
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_4'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+      security:
+      - bearerAuth: []
+  /summaries/id:
+    get:
+      tags:
+      - Sales Summary
+      description: Get All Orders
+      parameters:
+      - name: page
+        in: query
+        description: Current page number
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 2
+      - name: limit
+        in: query
+        description: Limit content
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 2
+      - name: sort_type
+        in: query
+        description: Type of sorting (asc or dsc)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: asc
+          enum:
+          - asc
+          - dsc
+      - name: sort_by
+        in: query
+        description: Type of sort by
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: updatedAt
+          enum:
+          - updatedAt
+          - createdAt
+      - name: id
+        in: query
+        description: Salesman ID
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 56
+      - name: date
+        in: query
+        description: date
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          format: date - time
+      responses:
+        "200":
+          description: Return of summarires
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_5'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "404":
+          description: Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - Sales Summary
+      description: Generate sales summary
+      requestBody:
+        description: Generate sales summary of a day
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/summaries_id_body'
+      responses:
+        "201":
+          description: Todays summary is updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201_1'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+      security:
+      - bearerAuth: []
+  /users:
+    post:
+      tags:
+      - User
+      description: Create a new user
+      requestBody:
+        description: Create a new user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/users_body'
+      responses:
+        "201":
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCreateDTO'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+      security:
+      - bearerAuth: []
+  /users/id:
+    get:
+      tags:
+      - User
+      description: Get user details
+      parameters:
+      - name: id
+        in: query
+        description: User ID
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 56
+      responses:
+        "200":
+          description: Return of user details
+          content:
+            application/schema:
+              schema:
+                $ref: '#/components/schemas/User'
+        "404":
+          description: Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+components:
+  schemas:
+    User:
+      allOf:
+      - type: object
+        properties:
+          id:
+            type: integer
+            format: int32
+            example: 1
+          name:
+            type: string
+            example: salesman1
+          shop_name:
+            type: string
+            example: shop1
+          email:
+            type: string
+            example: sales1@gmail.com
+          mobile:
+            type: integer
+            format: int32
+            example: 1630542948
+      - $ref: '#/components/schemas/Timestamp'
+    UserCreateDTO:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 201
+        message:
+          type: string
+          example: User created successfully
+        data:
+          $ref: '#/components/schemas/User'
+    Product:
+      allOf:
+      - required:
+        - id
+        - name
+        - price
+        - status
+        - stock
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int32
+            example: 1
+          name:
+            type: string
+            example: shampoo
+          description:
+            type: string
+            example: product description
+          image:
+            type: string
+            example: image.jpeg
+          stock:
+            type: integer
+            format: int32
+            example: 50
+          price:
+            type: integer
+            format: int32
+            example: 120
+          discount_percentage:
+            type: integer
+            format: int32
+            example: 5
+          discount_amount:
+            type: integer
+            format: int32
+            example: 20
+          status:
+            type: string
+            example: active
+          links:
+            type: string
+            format: url
+            example: /products/1
+      - $ref: '#/components/schemas/Timestamp'
+    ProductCreateDTO:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 201
+        message:
+          type: string
+          example: Product created successfully
+        data:
+          $ref: '#/components/schemas/Product'
+        links:
+          $ref: '#/components/schemas/ProductCreateDTO_links'
+    Order:
+      allOf:
+      - type: object
+        properties:
+          id:
+            type: integer
+            format: int32
+            example: 1
+          products:
+            type: array
+            items:
+              $ref: '#/components/schemas/Product'
+          sub_total_amount:
+            type: integer
+            format: int32
+            example: 354
+          discount:
+            type: integer
+            format: int32
+            example: 54
+          total_amount:
+            type: integer
+            format: int32
+            example: 300
+          status:
+            type: string
+            example: processing
+          payment_status:
+            type: string
+            example: processing
+    CreateOrder:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 201
+        message:
+          type: string
+          example: Order Created successfully
+        data:
+          $ref: '#/components/schemas/Order'
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          example: 2
+        limit:
+          type: integer
+          format: int32
+          example: 10
+        next:
+          type: integer
+          format: int32
+          example: 3
+        prev:
+          type: integer
+          format: int32
+          example: 1
+        totalPage:
+          type: integer
+          format: int32
+          example: 5
+        totalProducts:
+          type: integer
+          format: int32
+          example: 50
+    Timestamp:
+      required:
+      - createdAt
+      - updatedAt
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: datetime
+        updatedAt:
+          type: string
+          format: datetime
+    auth_signup_body:
+      required:
+      - mobile
+      - name
+      - staff_id
+      type: object
+      properties:
+        name:
+          type: string
+          example: Salesman 1
+        mobile:
+          type: integer
+          format: int32
+          example: 123654268
+        staff_id:
+          type: integer
+          format: int32
+          example: 265
+    inline_response_201:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 201
+        message:
+          type: string
+          example: Signup successful
+        data:
+          $ref: '#/components/schemas/inline_response_201_data'
+        links:
+          $ref: '#/components/schemas/inline_response_201_links'
+    inline_response_400:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 400
+        error:
+          type: string
+          example: Bad Request
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/inline_response_400_data'
+    inline_response_500:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 500
+        error:
+          type: string
+          example: Internal Server Error
+        message:
+          type: string
+          example: We are sorry for the inconvenience. Please try again later
+    auth_signin_body:
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: alamin@example.com
+        password:
+          type: string
+          format: password
+          example: PassWord123
+    inline_response_200:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 200
+        message:
+          type: string
+          example: Signin successful
+        data:
+          $ref: '#/components/schemas/inline_response_201_data'
+        links:
+          $ref: '#/components/schemas/inline_response_200_links'
+    auth_login_customer_body:
+      required:
+      - mobile
+      type: object
+      properties:
+        mobile:
+          type: integer
+          format: int32
+          example: 21977262
+    inline_response_200_1:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            allOf:
+            - required:
+              - id
+              - name
+              - price
+              - status
+              - stock
+              type: object
+              properties:
+                id:
+                  type: integer
+                  format: int32
+                  example: 1
+                name:
+                  type: string
+                  example: shampoo
+                description:
+                  type: string
+                  example: product description
+                image:
+                  type: string
+                  example: image.jpeg
+                stock:
+                  type: integer
+                  format: int32
+                  example: 50
+                price:
+                  type: integer
+                  format: int32
+                  example: 120
+                discount_percentage:
+                  type: integer
+                  format: int32
+                  example: 5
+                discount_amount:
+                  type: integer
+                  format: int32
+                  example: 20
+                status:
+                  type: string
+                  example: active
+                links:
+                  type: string
+                  format: url
+                  example: /products/1
+            - $ref: '#/components/schemas/Timestamp'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        links:
+          $ref: '#/components/schemas/inline_response_200_1_links'
+    products_body:
+      required:
+      - description
+      - image
+      - name
+      - price
+      - stock
+      type: object
+      properties:
+        name:
+          type: string
+          example: Product1
+        description:
+          type: string
+          example: description1
+        image:
+          type: string
+          example: image1.jpeg
+        stock:
+          type: integer
+          format: int32
+          example: 50
+        price:
+          type: integer
+          format: int32
+          example: 100
+        discount_percentage:
+          type: integer
+          format: int32
+          example: 2
+        discount_amount:
+          type: integer
+          format: int32
+          example: 50
+        final_price:
+          type: integer
+          format: int32
+          example: 50
+    inline_response_401:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        error:
+          type: string
+          example: Unauthorized
+        message:
+          type: string
+          example: You don't have the right permissions
+    inline_response_200_2:
+      type: object
+      properties:
+        data:
+          allOf:
+          - $ref: '#/components/schemas/Product'
+    inline_response_404:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 404
+        error:
+          type: string
+          example: Not Found
+        message:
+          type: string
+          example: Requested resource not found
+    products_id_body:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Product1
+        description:
+          type: string
+          example: description1
+        image:
+          type: string
+          example: image1.jpeg
+        stock:
+          type: integer
+          format: int32
+          example: 50
+        price:
+          type: integer
+          format: int32
+          example: 100
+        discount_percentage:
+          type: integer
+          format: int32
+          example: 2
+        discount_amount:
+          type: integer
+          format: int32
+          example: 50
+    inline_response_200_3:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/Order'
+            - $ref: '#/components/schemas/Timestamp'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    orders_products:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 2
+        price:
+          type: integer
+          format: int32
+          example: 100
+        qty:
+          type: integer
+          format: int32
+          example: 3
+        sub_total:
+          type: integer
+          format: int32
+          example: 300
+        discount:
+          type: integer
+          format: int32
+          example: 50
+        total:
+          type: integer
+          format: int32
+          example: 250
+    orders_body:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          format: int32
+          example: 1
+        salesman_id:
+          type: integer
+          format: int32
+          example: 2
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/orders_products'
+        total_qty:
+          type: integer
+          format: int32
+          example: 2
+        sub_total_amount:
+          type: integer
+          format: int32
+          example: 2
+        discount:
+          type: integer
+          format: int32
+          example: 2
+        total_amount:
+          type: integer
+          format: int32
+          example: 2
+    orders_id_body:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          format: int32
+          example: 1
+        salesman_id:
+          type: integer
+          format: int32
+          example: 2
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/orders_products'
+        total_qty:
+          type: integer
+          format: int32
+          example: 2
+        sub_total_amount:
+          type: integer
+          format: int32
+          example: 2
+        discount:
+          type: integer
+          format: int32
+          example: 2
+        total_amount:
+          type: integer
+          format: int32
+          example: 2
+    generate_summary_body:
+      required:
+      - salesman_id
+      type: object
+      properties:
+        salesman_id:
+          type: integer
+          format: int32
+          example: 3
+    inline_response_201_1:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 201
+        message:
+          type: string
+          example: Todays summary is generated
+    inline_response_200_4:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            allOf:
+            - type: object
+              properties:
+                id:
+                  type: integer
+                  format: int32
+                  example: 21
+                sub_total:
+                  type: integer
+                  format: int32
+                  example: 300
+                discount:
+                  type: integer
+                  format: int32
+                  example: 50
+                total:
+                  type: integer
+                  format: int32
+                  example: 250
+                status:
+                  type: string
+                  example: processing
+                payment_status:
+                  type: string
+                  example: pending
+                payment_method:
+                  type: string
+                  example: cash
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    inline_response_200_5:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/inline_response_200_5_data'
+    summaries_id_body:
+      type: object
+      properties:
+        received_tk:
+          type: integer
+          format: int32
+          example: 200
+        note:
+          type: string
+          example: Order summary note
+    users_body:
+      type: object
+      properties:
+        name:
+          type: string
+          example: User 1
+        email:
+          type: string
+          example: User1@gmail.com
+        mobile:
+          type: integer
+          format: int32
+          example: 1630542945
+        shop_name:
+          type: string
+          example: Shop 1
+        password:
+          type: string
+          example: 6145kjk
+        role:
+          type: string
+          example: salesman
+    ProductCreateDTO_links:
+      type: object
+      properties:
+        self:
+          type: string
+          format: url
+          example: /products/1
+    inline_response_201_data:
+      type: object
+      properties:
+        access_token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+    inline_response_201_links:
+      type: object
+      properties:
+        self:
+          type: string
+          example: /auth/signup
+        signin:
+          type: string
+          example: /auth/signin
+    inline_response_400_data:
+      type: object
+      properties:
+        field:
+          type: string
+          example: email
+        message:
+          type: string
+          example: Invalid email
+        in:
+          type: string
+          example: body
+          enum:
+          - query
+          - body
+    inline_response_200_links:
+      type: object
+      properties:
+        self:
+          type: string
+          example: /auth/signin
+    inline_response_200_1_links:
+      type: object
+      properties:
+        self:
+          type: string
+          format: url
+          example: /products?page=2&limit=10
+        next:
+          type: string
+          format: url
+          example: /products?page=3&limit=10
+        prev:
+          type: string
+          format: url
+          example: /products?page=1&limit=10
+    inline_response_200_5_data:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 21
+        sub_total:
+          type: integer
+          format: int32
+          example: 300
+        discount:
+          type: integer
+          format: int32
+          example: 50
+        total:
+          type: integer
+          format: int32
+          example: 250
+        status:
+          type: string
+          example: processing
+        payment_status:
+          type: string
+          example: pending
+        payment_method:
+          type: string
+          example: cash
+  responses:
+    "500":
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_500'
+    "400":
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_400'
+    "401":
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_401'
+    "404":
+      description: Resource Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_response_404'
+  parameters:
+    pageParam:
+      name: page
+      in: query
+      description: Current page number
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: integer
+        format: int32
+        example: 2
+    limitParam:
+      name: limit
+      in: query
+      description: Limit content
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: integer
+        format: int32
+        example: 2
+    sortTypeParam:
+      name: sort_type
+      in: query
+      description: Type of sorting (asc or dsc)
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+        example: asc
+        enum:
+        - asc
+        - dsc
+    sortByParam:
+      name: sort_by
+      in: query
+      description: Type of sort by
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+        example: updatedAt
+        enum:
+        - updatedAt
+        - createdAt
+    searchParam:
+      name: search
+      in: query
+      description: Search by product name
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
+        example: Product name
+    idPathParam:
+      name: id
+      in: query
+      description: User ID
+      required: true
+      style: form
+      explode: true
+      schema:
+        type: integer
+        format: int32
+        example: 56
+    salesmanIdParam:
+      name: id
+      in: query
+      description: Salesman ID
+      required: true
+      style: form
+      explode: true
+      schema:
+        type: integer
+        format: int32
+        example: 56
+    dateParam:
+      name: date
+      in: query
+      description: date
+      required: true
+      style: form
+      explode: true
+      schema:
+        type: string
+        format: date - time
+    roleParam:
+      name: role
+      in: query
+      description: User Role
+      required: true
+      style: form
+      explode: true
+      schema:
+        type: string
+        example: customer
+        enum:
+        - customer
+        - salesman
+        - accounts
+        - admin
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

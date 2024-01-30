@@ -1,0 +1,29 @@
+{
+  "development": {
+    "username": "root",
+    "password": "radiant@123",
+    "database": "mp_app",
+    "host": "116.68.200.97",
+    "port": "60906",
+    "dialect": "mysql",
+    "timezone": "Asia/Dhaka"
+  },
+  "test": {
+    "username": "root",
+    "password": "radiant@123",
+    "database": "mp_app",
+    "host": "116.68.200.97",
+    "port": "60906",
+    "dialect": "mysql",
+    "timezone": "Asia/Dhaka"
+  },
+  "production": {
+    "username": "root",
+    "password": "radiant@123",
+    "database": "mp_app",
+    "host": "116.68.200.97",
+    "port": "60906",
+    "dialect": "mysql",
+    "timezone": "Asia/Dhaka"
+  }
+}
