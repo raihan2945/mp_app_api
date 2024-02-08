@@ -102,7 +102,7 @@ const findAllItems = async ({ date: startDate }) => {
   const users = await Schedules.findAll({
     where: sequelize.literal(`DATE(date) = '${startDate}'`),
     order: [
-      ["date", "DESC"], // Order by createdAt column in descending order
+      ["created_at", "DESC"], // Order by createdAt column in descending order
     ],
     raw: true,
   });
