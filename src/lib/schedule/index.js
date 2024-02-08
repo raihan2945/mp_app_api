@@ -1,5 +1,6 @@
-const { Schedules } = require("@/src/model");
+const { Schedules,sequelize } = require("@/src/model");
 const { badRequest, serverError, notFound } = require("@/src/utils/error");
+const { Op, DATEONLY } = require("sequelize");
 
 //*: CREATE NEW
 const createNew = async (body) => {
@@ -85,8 +86,26 @@ const deleteItemById = async (id, bodyData) => {
 };
 
 //*: GET ALL ITEMS
-const findAllItems = async () => {
-  const users = await Schedules.findAll({ raw: true });
+const findAllItems = async ({ date: startDate }) => {
+  let whereString = {};
+
+  // console.log("Start Date is :", startDate);
+
+  if (startDate) {
+    whereString = {
+      date: {
+        [Op.gte]: startDate,
+      },
+    };
+  }
+
+  const users = await Schedules.findAll({
+    where: sequelize.literal(`DATE(date) = '${startDate}'`),
+    order: [
+      ["date", "DESC"], // Order by createdAt column in descending order
+    ],
+    raw: true,
+  });
 
   if (!users) {
     throw notFound("Item not found");
@@ -100,5 +119,5 @@ module.exports = {
   findItemById,
   updateItemById,
   findAllItems,
-  deleteItemById
+  deleteItemById,
 };

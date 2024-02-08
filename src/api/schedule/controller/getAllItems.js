@@ -2,7 +2,7 @@ const scheduleSerivce = require("@/src/lib/schedule");
 const inputSchema = require("@/src/validators/inputValidation");
 
 const getAllItems = async (req, res, next) => {
-  //   const id = req.params.id;
+  const date = req.query.date;
 
   const validationProperties = [
     { name: "id", type: "number", required: false },
@@ -24,14 +24,12 @@ const getAllItems = async (req, res, next) => {
 
   try {
     //*: CALL AUTH SERVICE TO SEND OTP TO USERS
-    const items = await scheduleSerivce.findAllItems();
+    const items = await scheduleSerivce.findAllItems({date});
 
     const response = {
       code: 200,
       message: "Items get Successfully",
-      data: [
-        ...items,
-      ],
+      data: [...items],
     };
 
     res.status(200).json(response);
