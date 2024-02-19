@@ -30,7 +30,7 @@ module.exports = (sequelize) => {
     },
 
     details: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -67,7 +67,7 @@ module.exports = (sequelize) => {
       field: "remind_time",
     },
     schedule_type: {
-      type: DataTypes.ENUM("event", "task"),
+      type: DataTypes.STRING(255),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
@@ -75,9 +75,9 @@ module.exports = (sequelize) => {
       comment: null,
       field: "schedule_type",
     },
-    
+
     notes: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.TEXT,
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
