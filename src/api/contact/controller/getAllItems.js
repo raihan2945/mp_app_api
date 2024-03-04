@@ -3,6 +3,7 @@ const inputSchema = require("@/src/validators/inputValidation");
 
 const getAllItems = async (req, res, next) => {
     const queries = req.query;
+    const search = req.query.search
 
   const validationProperties = [
     { name: "division", type: "string", required: false },
@@ -16,13 +17,14 @@ const getAllItems = async (req, res, next) => {
     { name: "mobile", type: "string", required: false },
     { name: "email", type: "string", required: false },
     { name: "address", type: "string", required: false },
+    { name: "search", type: "string", required: false },
   ];
 
   //* BUILD INPUT SCHEMA
   const buildedSchema = inputSchema(validationProperties);
 
   //* : VALIDATE INPUT DATA
-  const { error } = buildedSchema.validate({}, { abortEarly: false });
+  const { error } = buildedSchema.validate({...queries}, { abortEarly: false });
 
   if (error) {
     return res.status(400).json({
@@ -34,7 +36,7 @@ const getAllItems = async (req, res, next) => {
 
   try {
     //*: CALL AUTH SERVICE TO SEND OTP TO USERS
-    const items = await contactService.findAllItems(queries);
+    const items = await contactService.findAllItems({queries, search});
 
     const response = {
       code: 200,

@@ -85,13 +85,17 @@ const deleteItemById = async (id, bodyData) => {
 };
 
 //*: GET ALL ITEMS
-const findAllItems = async (queries) => {
+const findAllItems = async ({ queries, search }) => {
   let queryString = `SELECT * from contacts`;
   if (queries) {
     let validProperties = [];
 
     Object.keys(queries).map((key) => {
       if (queries[key]) {
+        if (key == "search") {
+          return;
+        }
+
         validProperties.push({
           [key]: queries[key],
         });
@@ -107,6 +111,18 @@ const findAllItems = async (queries) => {
         queryString = queryString + ` AND ${key[0]} LIKE "%${item[key[0]]}%"`;
       }
     });
+
+    if (search) {
+      if (validProperties.length > 0) {
+        queryString =
+          queryString +
+          ` AND LOWER(first_name) LIKE LOWER("%${search}%") OR LOWER(last_name) LIKE LOWER("%${search}%") OR LOWER(email) LIKE LOWER("%${search}%") OR LOWER(address) LIKE LOWER("%${search}%") OR mobile LIKE "%${search}%"`;
+      } else {
+        queryString =
+          queryString +
+          ` WHERE LOWER(first_name) LIKE LOWER("%${search}%") OR LOWER(last_name) LIKE LOWER("%${search}%") OR LOWER(email) LIKE LOWER("%${search}%") OR LOWER(address) LIKE LOWER("%${search}%") OR mobile LIKE "%${search}%"`;
+      }
+    }
 
     console.log("valid properties are : ", validProperties);
   }
