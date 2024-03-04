@@ -6,6 +6,8 @@ const { controllers: contactController } = require("@/src/api/contact");
 // const ownership = require('../middleware/ownership');
 
 //* 
+router.get("/tags", contactController.getAllUserTags);
+//* 
 router.post("/", contactController.createNewItem);
 
 router.get("/", contactController.getAllItems);

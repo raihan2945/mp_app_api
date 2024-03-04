@@ -18,6 +18,11 @@ const updateItemById = async (req, res, next) => {
     { name: "address", type: "string", required: false },
     { name: "notes", type: "string", required: false },
     { name: "status", type: "string", required: false },
+    { name: "division", type: "string", required: false },
+    { name: "district", type: "string", required: false },
+    { name: "upazila", type: "string", required: false },
+    { name: "union", type: "string", required: false },
+    { name: "tag", type: "string", required: false },
   ];
 
   //* BUILD INPUT SCHEMA

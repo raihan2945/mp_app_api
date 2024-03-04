@@ -95,12 +95,27 @@ module.exports = (sequelize) => {
     },
     address: {
       type: DataTypes.STRING(255),
-      allowNull: true,
-      defaultValue: null,
-      primaryKey: false,
-      autoIncrement: false,
-      comment: null,
       field: "address",
+    },
+    tag: {
+      type: DataTypes.TEXT,
+      field: "tag",
+    },
+    division: {
+      type: DataTypes.STRING(255),
+      field: "division",
+    },
+    district: {
+      type: DataTypes.STRING(255),
+      field: "district",
+    },
+    upazila: {
+      type: DataTypes.STRING(255),
+      field: "upazila",
+    },
+    union: {
+      type: DataTypes.TEXT,
+      field: "union",
     },
     notes: {
       type: DataTypes.STRING(255),

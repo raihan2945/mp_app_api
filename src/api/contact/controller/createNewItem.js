@@ -15,6 +15,11 @@ const createNewItem = async (req, res, next) => {
     { name: "dob", type: "string", required: false },
     { name: "address", type: "string", required: false },
     { name: "notes", type: "string", required: false },
+    { name: "division", type: "string", required: false },
+    { name: "district", type: "string", required: false },
+    { name: "upazila", type: "string", required: false },
+    { name: "union", type: "string", required: false },
+    { name: "tag", type: "string", required: false },
   ];
 
   //* BUILD INPU T SCHEMA

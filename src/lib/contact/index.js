@@ -1,4 +1,4 @@
-const { Contacts } = require("@/src/model");
+const { Contacts, sequelize } = require("@/src/model");
 const { badRequest, serverError, notFound } = require("@/src/utils/error");
 
 //*: CREATE NEW
@@ -85,14 +85,44 @@ const deleteItemById = async (id, bodyData) => {
 };
 
 //*: GET ALL ITEMS
-const findAllItems = async () => {
-  const users = await Contacts.findAll({ raw: true });
+const findAllItems = async (queries) => {
+  let queryString = `SELECT * from contacts`;
+  if (queries) {
+    let validProperties = [];
 
-  if (!users) {
-    throw notFound("Item not found");
+    Object.keys(queries).map((key) => {
+      if (queries[key]) {
+        validProperties.push({
+          [key]: queries[key],
+        });
+      }
+    });
+
+    validProperties.map((item, index) => {
+      if (index == 0) {
+        const key = Object.keys(item);
+        queryString = queryString + ` WHERE ${key[0]} LIKE "%${item[key[0]]}%"`;
+      } else {
+        const key = Object.keys(item);
+        queryString = queryString + ` AND ${key[0]} LIKE "%${item[key[0]]}%"`;
+      }
+    });
+
+    console.log("valid properties are : ", validProperties);
   }
 
-  return users;
+  const users = await sequelize.query(queryString);
+
+  return users[0];
+};
+
+//* GET ALL USER TAGS
+const getAllTags = async () => {
+  const data = await sequelize.query(
+    `SELECT DISTINCT tag from contacts GROUP BY tag`
+  );
+
+  return data[0];
 };
 
 module.exports = {
@@ -101,4 +131,5 @@ module.exports = {
   updateItemById,
   findAllItems,
   deleteItemById,
+  getAllTags,
 };
