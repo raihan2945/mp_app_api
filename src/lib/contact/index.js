@@ -127,6 +127,8 @@ const findAllItems = async ({ queries, search }) => {
     console.log("valid properties are : ", validProperties);
   }
 
+  queryString = queryString + ` ORDER BY created_at DESC`
+
   const users = await sequelize.query(queryString);
 
   return users[0];
