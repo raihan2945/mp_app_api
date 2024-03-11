@@ -4,6 +4,8 @@ const inputSchema = require("@/src/validators/inputValidation");
 const createNewItem = async (req, res, next) => {
   const bodyData = req.body;
 
+  console.log('body data is : ', bodyData)
+
   const validationProperties = [
     { name: "category_id", type: "number", required: false },
     { name: "first_name", type: "string", required: true },
