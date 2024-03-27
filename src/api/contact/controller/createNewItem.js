@@ -23,6 +23,8 @@ const createNewItem = async (req, res, next) => {
     { name: "upazila", type: "string", required: false },
     { name: "union", type: "string", required: false },
     { name: "tag", type: "string", required: false },
+    { name: "office", type: "string", required: false },
+
   ];
 
   //* BUILD INPU T SCHEMA
