@@ -16,6 +16,7 @@ const createNewItem = async (req, res, next) => {
     { name: "email", type: "email", required: false },
     { name: "dob", type: "string", required: false },
     { name: "address", type: "string", required: false },
+    { name: "address_2", type: "string", required: false },
     { name: "notes", type: "string", required: false },
     { name: "division", type: "string", required: false },
     { name: "district", type: "string", required: false },

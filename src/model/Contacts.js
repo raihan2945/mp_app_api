@@ -97,6 +97,10 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING(255),
       field: "address",
     },
+    address_2: {
+      type: DataTypes.STRING(255),
+      field: "address_2",
+    },
     tag: {
       type: DataTypes.TEXT,
       field: "tag",
