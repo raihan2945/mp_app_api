@@ -34,6 +34,8 @@ const updateItemById = async (id, bodyData) => {
     newData[key] = bodyData[key] ?? newData[key];
   });
 
+  console.log("new data is : ", newData)
+
   const updatedData = await Contacts.findOne({ where: { id: id } })
     .then((data) => {
       if (!data) {

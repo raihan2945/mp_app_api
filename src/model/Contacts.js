@@ -105,6 +105,10 @@ module.exports = (sequelize) => {
       type: DataTypes.TEXT,
       field: "tag",
     },
+    office: {
+      type: DataTypes.TEXT,
+      field: "office",
+    },
     division: {
       type: DataTypes.STRING(255),
       field: "division",
