@@ -24,67 +24,64 @@ module.exports = (sequelize) => {
     },
 
     mobile: {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-        defaultValue: null,
-        primaryKey: false,
-        autoIncrement: false,
-        comment: null,
-        field: "mobile",
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "mobile",
     },
 
     company_name: {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-        defaultValue: null,
-        primaryKey: false,
-        autoIncrement: false,
-        comment: null,
-        field: "company_name",
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "company_name",
     },
 
     company_location: {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-        defaultValue: null,
-        primaryKey: false,
-        autoIncrement: false,
-        comment: null,
-        field: "company_location",
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "company_location",
     },
 
     designation: {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-        defaultValue: null,
-        primaryKey: false,
-        autoIncrement: false,
-        comment: null,
-        field: "designation",
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "designation",
     },
 
-
     address: {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-        defaultValue: null,
-        primaryKey: false,
-        autoIncrement: false,
-        comment: null,
-        field: "address",
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "address",
     },
 
     note: {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-        defaultValue: null,
-        primaryKey: false,
-        autoIncrement: false,
-        comment: null,
-        field: "note",
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "note",
     },
-
-
 
     created_at: {
       type: DataTypes.DATE,
@@ -95,7 +92,6 @@ module.exports = (sequelize) => {
       comment: null,
       field: "created_at",
     },
-
 
     updated_at: {
       type: DataTypes.DATE,
@@ -115,7 +111,6 @@ module.exports = (sequelize) => {
     updatedAt: false,
   };
 
-  
   const Appointment = sequelize.define("Appointment", attributes, options);
   return Appointment;
 };
