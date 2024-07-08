@@ -1,15 +1,39 @@
 const { Appointment } = require("@/src/model");
+const { Op } = require("sequelize");
 
+const getAll = async (req, res, next) => {
+  const currentPage = Number(req.query?.page) - 1 || 0;
+  const limit = Number(req.query?.limit) || 10;
+  const search = req.query?.search;
 
-const getAll = async(req, res, next) => {
+  let data = await Appointment.findAll({
+    offset: currentPage * limit,
+    limit: limit,
+  });
 
-    const currentPage = (Number(req.query?.page) - 1) || 0
-    const limit = Number(req.query?.limit) || 10
+  let count = await Appointment.count();
 
-    const data = await Appointment.findAll({offset: currentPage*limit, limit: limit})
-    const count = await Appointment.count()
+  if (search) {
+    data = await Appointment.findAll({
+      offset: currentPage * limit,
+      limit: limit,
+      where: {
+        full_name: {
+            [Op.like]: `%${search}%`
+        },
+      },
+    });
 
-    return res.status(200).json({data:data, count: count})
-}
+    count = await Appointment.count({
+        where: {
+            full_name: {
+                [Op.like]: `%${search}%`
+            },
+          },
+    });
+  }
 
-module.exports = getAll
+  return res.status(200).json({ data: data, count: count });
+};
+
+module.exports = getAll;
