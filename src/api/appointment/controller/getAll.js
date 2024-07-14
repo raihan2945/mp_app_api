@@ -16,6 +16,11 @@ const getAll = async (req, res, next) => {
 
   let count = await Appointment.count();
 
+  // for download all 
+  if(!req.query.limit) {
+    data = await Appointment.findAll();
+  }
+
   if (search) {
     data = await Appointment.findAll({
       offset: currentPage * limit,
