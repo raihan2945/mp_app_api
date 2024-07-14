@@ -11,6 +11,7 @@ const getAll = async (req, res, next) => {
   let data = await Appointment.findAll({
     offset: currentPage * limit,
     limit: limit,
+    order: [['created_at', 'DESC']],
   });
 
   let count = await Appointment.count();
@@ -19,6 +20,7 @@ const getAll = async (req, res, next) => {
     data = await Appointment.findAll({
       offset: currentPage * limit,
       limit: limit,
+      order: [['created_at', 'DESC']],
       where: {
         full_name: {
           [Op.like]: `%${search}%`,
@@ -40,6 +42,7 @@ const getAll = async (req, res, next) => {
     data = await Appointment.findAll({
       offset: currentPage * limit,
       limit: limit,
+      order: [['created_at', 'DESC']],
       where: {
         created_at: {
           [Op.between]: [new Date(dateStart), new Date(dateEnd)],
@@ -51,6 +54,35 @@ const getAll = async (req, res, next) => {
       where: {
         created_at: {
           [Op.between]: [new Date(dateStart), new Date(dateEnd)],
+        },
+      },
+    });
+  }
+
+
+  // date picker range with search
+  if (dateStart && dateEnd && search) {
+    data = await Appointment.findAll({
+      offset: currentPage * limit,
+      limit: limit,
+      order: [['created_at', 'DESC']],
+      where: {
+        created_at: {
+          [Op.between]: [new Date(dateStart), new Date(dateEnd)],
+        },
+        full_name: {
+          [Op.like]: `%${search}%`,
+        },
+      },
+    });
+
+    count = await Appointment.count({
+      where: {
+        created_at: {
+          [Op.between]: [new Date(dateStart), new Date(dateEnd)],
+        },
+        full_name: {
+          [Op.like]: `%${search}%`,
         },
       },
     });
