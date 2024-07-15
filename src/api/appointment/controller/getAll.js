@@ -50,7 +50,7 @@ const getAll = async (req, res, next) => {
       order: [['created_at', 'DESC']],
       where: {
         created_at: {
-          [Op.between]: [new Date(dateStart), new Date(dateEnd)],
+          [Op.between]: [new Date(dateStart), new Date(dateEnd + ' 23:59:59')],
         },
       },
     });
@@ -58,7 +58,7 @@ const getAll = async (req, res, next) => {
     count = await Appointment.count({
       where: {
         created_at: {
-          [Op.between]: [new Date(dateStart), new Date(dateEnd)],
+          [Op.between]: [new Date(dateStart), new Date(dateEnd + ' 23:59:59')],
         },
       },
     });
@@ -73,7 +73,7 @@ const getAll = async (req, res, next) => {
       order: [['created_at', 'DESC']],
       where: {
         created_at: {
-          [Op.between]: [new Date(dateStart), new Date(dateEnd)],
+          [Op.between]: [new Date(dateStart), new Date(dateEnd + ' 23:59:59')],
         },
         full_name: {
           [Op.like]: `%${search}%`,
