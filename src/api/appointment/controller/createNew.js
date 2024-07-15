@@ -16,6 +16,10 @@ const createNew = async(req, res, next) => {
          })
     }
 
+    if(data.start == null) {
+        data.start = new Date()
+    }
+
     const appointment = await Appointment.create({...data})
     
     return res.status(200).json(appointment);
