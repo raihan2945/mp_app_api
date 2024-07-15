@@ -83,6 +83,26 @@ module.exports = (sequelize) => {
       field: "note",
     },
 
+    start: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "start",
+    },
+
+    end: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "end",
+    },
+
     created_at: {
       type: DataTypes.DATE,
       allowNull: true,
