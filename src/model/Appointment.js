@@ -83,6 +83,16 @@ module.exports = (sequelize) => {
       field: "note",
     },
 
+    reference: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "reference",
+    },
+
     start: {
       type: DataTypes.DATE,
       allowNull: true,
