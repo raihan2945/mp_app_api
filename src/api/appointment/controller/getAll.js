@@ -47,7 +47,7 @@ const getAll = async (req, res, next) => {
     data = await Appointment.findAll({
       offset: currentPage * limit,
       limit: limit,
-      order: [['created_at', 'DESC']],
+      order: [['start', 'ASC']],
       where: {
         start: {
           [Op.between]: [new Date(dateStart), new Date(dateEnd + ' 23:59:59')],
@@ -57,7 +57,7 @@ const getAll = async (req, res, next) => {
 
     count = await Appointment.count({
       where: {
-        created_at: {
+        start: {
           [Op.between]: [new Date(dateStart), new Date(dateEnd + ' 23:59:59')],
         },
       },
