@@ -49,7 +49,7 @@ const getAll = async (req, res, next) => {
       limit: limit,
       order: [['created_at', 'DESC']],
       where: {
-        created_at: {
+        start: {
           [Op.between]: [new Date(dateStart), new Date(dateEnd + ' 23:59:59')],
         },
       },
