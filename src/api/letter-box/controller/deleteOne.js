@@ -11,7 +11,6 @@ const deleteOne = async (req, res, next) => {
     );
     return res.status(200).json(letter);
   } catch (error) {
-    console.log(error);
     return res.status(400).json({ status: error.message });
   }
 };
