@@ -1,4 +1,6 @@
 const { LetterBox } = require("@/src/model");
+const { Op } = require("sequelize");
+
 
 const getAll = async (req, res, next) => {
   const currentPage = Number(req.query?.page) - 1 || 0;
