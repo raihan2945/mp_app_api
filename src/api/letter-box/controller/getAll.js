@@ -1,7 +1,6 @@
 const { LetterBox } = require("@/src/model");
 
 const getAll = async (req, res, next) => {
-  const data = req.body;
   try {
     const letter = await LetterBox.findAll();
     return res.status(200).json(letter);
