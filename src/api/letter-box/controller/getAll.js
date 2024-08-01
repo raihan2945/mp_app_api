@@ -44,9 +44,9 @@ const getAll = async (req, res, next) => {
       data = await LetterBox.findAll({
         offset: currentPage * limit,
         limit: limit,
-        order: [["start", "ASC"]],
+        order: [["created_at", "ASC"]],
         where: {
-          start: {
+          created_at: {
             [Op.between]: [
               new Date(dateStart),
               new Date(dateEnd + " 23:59:59"),
@@ -57,7 +57,7 @@ const getAll = async (req, res, next) => {
 
       count = await LetterBox.count({
         where: {
-          start: {
+          created_at: {
             [Op.between]: [
               new Date(dateStart),
               new Date(dateEnd + " 23:59:59"),
